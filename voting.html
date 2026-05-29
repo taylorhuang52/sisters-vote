@@ -41,7 +41,7 @@
     background-position: center;
     opacity: 0;
     transition: opacity 1.8s ease-in-out;
-    filter: blur(3px) brightness(0.25) saturate(0.7);
+    filter: blur(0.8px) brightness(0.78) saturate(0.65);
   }
 
   .bg-slide.active { opacity: 1; }
@@ -513,6 +513,255 @@
     .card, .results-card { padding: 24px 16px; }
     .date-grid { grid-template-columns: repeat(2, 1fr); }
   }
+
+  /* ── Places section ─────────────────────────────────────────── */
+  .places-section {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 28px;
+    animation: fade-up 1.5s ease-out 0.6s both;
+  }
+
+  .places-section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--rose);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .place-card {
+    background: rgba(26,10,20,0.65);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .place-card:hover {
+    border-color: rgba(212,175,55,0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(212,175,55,0.12);
+  }
+
+  .place-card.selected {
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.08);
+    box-shadow: 0 0 30px rgba(212,175,55,0.2);
+  }
+
+  .place-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) saturate(0.9);
+    transition: filter 0.4s;
+  }
+
+  .place-card:hover .place-img { filter: brightness(1) saturate(1.1); }
+
+  .place-body {
+    padding: 16px 20px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .place-checkbox-wrap {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .place-checkbox {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(212,175,55,0.4);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .place-checkbox:checked {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .place-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1A0A14;
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  .place-info { flex: 1; }
+
+  .place-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .place-tag {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: var(--rose-dark);
+    background: rgba(192,96,128,0.15);
+    border: 1px solid rgba(192,96,128,0.3);
+    border-radius: 20px;
+    padding: 2px 8px;
+  }
+
+  .place-desc {
+    font-size: 0.82rem;
+    color: rgba(255,248,240,0.55);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .place-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .place-link:hover { color: var(--gold-light); border-color: var(--gold); }
+
+  /* Place results */
+  .place-results-card {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 16px;
+    background: rgba(26,10,20,0.5);
+    border: 1px solid rgba(212,175,55,0.12);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(12px);
+    animation: fade-up 1.8s ease-out 0.8s both;
+  }
+
+  @media (max-width: 500px) {
+    .place-img { height: 140px; }
+    .place-body { padding: 12px 14px 14px; gap: 10px; }
+  }
+
+  /* ── Brightness Toolbar ───────────────────────────────────────── */
+  #bg-toolbar {
+    position: fixed;
+    bottom: 36px;
+    right: 20px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #bg-toolbar-panel {
+    background: rgba(26,10,20,0.85);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 16px;
+    padding: 14px 16px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 180px;
+  }
+
+  #bg-toolbar-panel.open { display: flex; }
+
+  .tb-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: rgba(255,248,240,0.45);
+    text-align: center;
+  }
+
+  .tb-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tb-icon { font-size: 1rem; flex-shrink: 0; }
+
+  .tb-slider {
+    -webkit-appearance: none;
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(212,175,55,0.3), var(--gold));
+    outline: none;
+    cursor: pointer;
+  }
+
+  .tb-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px rgba(212,175,55,0.6);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  .tb-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+  .tb-val {
+    font-size: 0.72rem;
+    color: var(--gold);
+    min-width: 28px;
+    text-align: right;
+    font-weight: 700;
+  }
+
+  #tb-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(26,10,20,0.85);
+    border: 1px solid rgba(212,175,55,0.4);
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #tb-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
+  }
 </style>
 </head>
 <body>
@@ -531,6 +780,14 @@
     <p class="sub-title">選出大家都有空的禮拜四 ✦ 2026 夏日出遊</p>
   </header>
 
+  <div class="card" style="margin-bottom: 24px; padding: 24px 32px;">
+    <p class="section-heading" style="margin-bottom: 14px;">✦ 請先輸入你的名字 ✦</p>
+    <div class="name-input-wrap" style="margin-bottom: 0;">
+      <label>你的名字（日期＆地點投票共用）</label>
+      <input type="text" class="name-input" id="voter-name" placeholder="輸入你的大名 ✨" maxlength="20">
+    </div>
+  </div>
+
   <div id="winner-banner">
     <div class="winner-label">✦ 目前最多票的日期 ✦</div>
     <div id="winner-display" class="no-votes-yet">等待第一票 ...</div>
@@ -540,27 +797,173 @@
   <div class="card">
     <p class="section-heading">✦ 投下你的一票 ✦</p>
 
-    <div class="name-input-wrap">
-      <label>你的名字</label>
-      <input type="text" class="name-input" id="voter-name" placeholder="輸入你的大名 ✨" maxlength="20">
-    </div>
-
     <p class="section-heading" style="margin-bottom: 16px;">選擇你方便的日期（可複選）</p>
     <div class="date-grid" id="date-grid"></div>
 
-    <div class="submit-wrap">
-      <button class="submit-btn" id="submit-btn" onclick="submitVote()">
-        💛 送出投票
-      </button>
-    </div>
-
-    <div id="status-msg"></div>
   </div>
 
   <div class="results-card">
     <p class="section-heading">✦ 即時票數統計 ✦</p>
     <div id="results-list"></div>
   </div>
+  <!-- ── 地點投票 ── -->
+  <div class="places-section">
+    <p class="places-section-title">✦ 你想去哪裡？（可複選）✦</p>
+
+    <!-- 1. 菓風糖果工房 -->
+    <div class="place-card" id="pc_1">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scefarm19.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=70'" alt="菓風糖果工房">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_1" value="菓風糖果工房" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_1" class="place-name" style="cursor:pointer">
+            🍬 菓風糖果工房
+            <span class="place-tag">觀光工廠</span>
+          </label>
+          <p class="place-desc">日式庭園風格的糖果樂園，台灣第一家專業糖果店菓風小舖旗下複合式商場。水上玻璃屋餐廳環境絕美，可體驗糖果與巧克力 DIY，超大馬卡龍打卡點超療癒。免門票入場。</p>
+          <a class="place-link" href="https://maps.app.goo.gl/yilansugar" target="_blank">📍 宜蘭縣員山鄉賢德路二段188號 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 伯朗咖啡館 -->
+    <div class="place-card" id="pc_2">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scemount1.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=70'" alt="伯朗咖啡館">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_2" value="伯朗咖啡館" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_2" class="place-name" style="cursor:pointer">
+            ☕ 伯朗咖啡館
+            <span class="place-tag">景觀咖啡</span>
+          </label>
+          <p class="place-desc">金車城堡咖啡館，坐落外澳海岸邊的城堡建築，眼前是無邊際海景與龜山島，可以喝咖啡、欣賞衝浪與飛行傘，是宜蘭最具話題的景觀咖啡館之一。</p>
+          <a class="place-link" href="https://maps.app.goo.gl/mrbrowncastle" target="_blank">📍 宜蘭縣頭城鎮濱海路五段金車城堡 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 長埤湖精靈村 -->
+    <div class="place-card" id="pc_3">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scefarm62.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=700&q=70'" alt="長埤湖精靈村">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_3" value="長埤湖精靈村" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_3" class="place-name" style="cursor:pointer">
+            🧚 長埤湖精靈村
+            <span class="place-tag">湖畔秘境</span>
+          </label>
+          <p class="place-desc">位於三星鄉深山中的天然湖泊，湖面如鏡、四周被翠綠山林環抱，彩繪堤防上繪有三星在地景點意象。精靈村氛圍神秘夢幻，是宜蘭最具仙境感的隱藏版景點。</p>
+          <a class="place-link" href="https://maps.app.goo.gl/changpeilake" target="_blank">📍 宜蘭縣三星鄉長埤湖 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 宜農牧場 -->
+    <div class="place-card" id="pc_4">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scefarm67.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=700&q=70'" alt="宜農牧場">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_4" value="宜農牧場" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_4" class="place-name" style="cursor:pointer">
+            🐑 宜農牧場
+            <span class="place-tag">親子牧場</span>
+          </label>
+          <p class="place-desc">員山鄉的療癒系親子牧場，可以餵羊、擠羊奶、親近可愛動物。銅板價體驗豐富 DIY 活動，包含羊奶饅頭製作、陶瓷彩繪等，CP 值超高的宜蘭免費景點。</p>
+          <a class="place-link" href="https://maps.app.goo.gl/yinongfarm" target="_blank">📍 宜蘭縣員山鄉 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 員山金車酒廠 -->
+    <div class="place-card" id="pc_5">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scefarm69.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=700&q=70'" alt="員山金車酒廠">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_5" value="員山金車酒廠" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_5" class="place-name" style="cursor:pointer">
+            🥃 員山金車酒廠
+            <span class="place-tag">觀光酒廠</span>
+          </label>
+          <p class="place-desc">噶瑪蘭威士忌酒廠，榮獲世界百大酒廠殊榮。免費參觀透明化釀酒過程、免費試飲威士忌，園區內附設伯朗咖啡蘭花園，環境優美視野遼闊，是結合知性與美食的好去處。</p>
+          <a class="place-link" href="https://www.kavalanwhisky.com/" target="_blank">🌐 官方網站 kavalan ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 小熊書房 -->
+    <div class="place-card" id="pc_6">
+      <img class="place-img" src="https://scenic.ilantravel.com.tw/2017sce/images/scefarm35.jpg"
+           onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=700&q=70'" alt="小熊書房">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_6" value="小熊書房" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_6" class="place-name" style="cursor:pointer">
+            🐻 小熊書房
+            <span class="place-tag">親子餐廳</span>
+          </label>
+          <p class="place-desc">位於梅花湖畔的小熊書房親子餐廳，湖光山色環境絕佳。湖中有吊橋連結浮島，可俯瞰三面環山的天然梅花湖，沿岸有特色咖啡廳、小吃街，是散步踏青的絕佳去處。</p>
+          <a class="place-link" href="https://frontenac.gogobnb.com/sce.php" target="_blank">🗺 更多宜蘭景點 ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 統一送出按鈕 -->
+  <div style="width:100%; max-width:700px; text-align:center; margin: 8px 0 28px;">
+    <div class="submit-wrap">
+      <button class="submit-btn" id="submit-btn" onclick="submitVote()">
+        💛 確認送出投票
+      </button>
+    </div>
+    <div id="status-msg" style="margin-top:16px; text-align:center; font-size:0.9rem; min-height:24px;"></div>
+  </div>
+
+  <!-- Place results -->
+  <div class="place-results-card">
+    <p class="section-heading">✦ 景點票數統計 ✦</p>
+    <div id="place-results-list"></div>
+  </div>
+
+  <!-- Brightness Toolbar -->
+  <div id="bg-toolbar">
+    <div id="bg-toolbar-panel">
+      <div class="tb-label">✦ 背景調整 ✦</div>
+      <div class="tb-row">
+        <span class="tb-icon">☀️</span>
+        <input type="range" class="tb-slider" id="sl-brightness" min="10" max="80" value="78">
+        <span class="tb-val" id="val-brightness">78%</span>
+      </div>
+      <div class="tb-row">
+        <span class="tb-icon">🔵</span>
+        <input type="range" class="tb-slider" id="sl-blur" min="0" max="8" value="1" step="0.5" step="0.5">
+        <span class="tb-val" id="val-blur">1px</span>
+      </div>
+      <div class="tb-row">
+        <span class="tb-icon">🎨</span>
+        <input type="range" class="tb-slider" id="sl-saturate" min="0" max="150" value="65">
+        <span class="tb-val" id="val-saturate">65%</span>
+      </div>
+    </div>
+    <button id="tb-toggle" onclick="toggleToolbar()" title="調整背景">🎛️</button>
+  </div>
+
 </div>
 
 <div class="carousel-dots" id="carousel-dots"></div>
@@ -712,6 +1115,10 @@ async function fetchVotes() {
       voteCounts = data.counts;
       updateResultsUI();
     }
+    if (data.placeCounts) {
+      placeCounts = data.placeCounts;
+      updatePlaceResultsUI();
+    }
   } catch(e) {
     console.log("Could not fetch votes:", e);
   }
@@ -726,7 +1133,17 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove("show"), 3000);
 }
 
-// ─── Submit vote ─────────────────────────────────────────────────────────────
+// ─── 台灣時間 ────────────────────────────────────────────────────────────────
+function getTWTime() {
+  return new Date().toLocaleString("zh-TW", {
+    timeZone: "Asia/Taipei",
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
+    hour12: false
+  });
+}
+
+// ─── 送出投票（日期＋地點合併）────────────────────────────────────────────────
 async function submitVote() {
   const name = document.getElementById("voter-name").value.trim();
   if (!name) { showToast("請先輸入你的名字 ✨"); return; }
@@ -734,54 +1151,115 @@ async function submitVote() {
   const selected = [...document.querySelectorAll(".date-chip input:checked")].map(c => c.value);
   if (selected.length === 0) { showToast("請至少選擇一個日期 📅"); return; }
 
+  const selectedPlaces = [...document.querySelectorAll(".place-checkbox:checked")].map(c => c.value);
+  if (selectedPlaces.length === 0) { showToast("請至少選擇一個景點 📍"); return; }
+
   const btn = document.getElementById("submit-btn");
   const status = document.getElementById("status-msg");
   btn.disabled = true;
   status.className = "status-loading";
-  status.textContent = "⏳ 投票中...";
+  status.textContent = "⏳ 送出中...";
 
   // Optimistic update
   selected.forEach(d => { voteCounts[d] = (voteCounts[d] || 0) + 1; });
   updateResultsUI();
+  selectedPlaces.forEach(p => { placeCounts[p] = (placeCounts[p] || 0) + 1; });
+  updatePlaceResultsUI();
 
   if (APPS_SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") {
-    // Demo mode
     status.className = "status-ok";
-    status.textContent = "✅ 投票成功！（Demo 模式 — 請設定 Apps Script URL）";
+    status.textContent = "✅ 投票成功！（Demo 模式）";
     btn.disabled = false;
     showToast("💛 謝謝 " + name + " 的投票！");
-    // Uncheck all
     document.querySelectorAll(".date-chip input").forEach(c => c.checked = false);
+    document.querySelectorAll(".place-checkbox").forEach(c => c.checked = false);
+    document.querySelectorAll(".place-card").forEach(c => c.classList.remove("selected"));
     document.getElementById("voter-name").value = "";
     return;
   }
 
   try {
-    const payload = { name, dates: selected, timestamp: new Date().toISOString() };
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    });
+    const payload = { name, dates: selected, places: selectedPlaces, timestamp: getTWTime() };
+    const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
     const data = await res.json();
     if (data.success) {
       status.className = "status-ok";
       status.textContent = "✅ 投票成功！感謝 " + name + " 的參與 💛";
       showToast("💛 謝謝 " + name + " 的投票！");
       document.querySelectorAll(".date-chip input").forEach(c => c.checked = false);
+      document.querySelectorAll(".place-checkbox").forEach(c => c.checked = false);
+      document.querySelectorAll(".place-card").forEach(c => c.classList.remove("selected"));
       document.getElementById("voter-name").value = "";
       if (data.counts) { voteCounts = data.counts; updateResultsUI(); }
-    } else {
-      throw new Error(data.error || "Unknown error");
-    }
+      if (data.placeCounts) { placeCounts = data.placeCounts; updatePlaceResultsUI(); }
+    } else { throw new Error(data.error || "Unknown error"); }
   } catch(e) {
-    // Rollback
     selected.forEach(d => { voteCounts[d] = Math.max(0, (voteCounts[d]||0) - 1); });
     updateResultsUI();
+    selectedPlaces.forEach(p => { placeCounts[p] = Math.max(0, (placeCounts[p]||0) - 1); });
+    updatePlaceResultsUI();
     status.className = "status-err";
     status.textContent = "❌ 投票失敗，請稍後再試";
   }
   btn.disabled = false;
 }
+
+// ─── Places data ─────────────────────────────────────────────────────────────
+const PLACES = [
+  "菓風糖果工房", "伯朗咖啡館", "長埤湖精靈村",
+  "宜農牧場", "員山金車酒廠", "小熊書房"
+];
+let placeCounts = {};
+PLACES.forEach(p => placeCounts[p] = 0);
+
+function togglePlaceCard(cb) {
+  const card = document.getElementById("pc_" + cb.id.split("_")[1]);
+  if (cb.checked) card.classList.add("selected");
+  else card.classList.remove("selected");
+}
+
+function updatePlaceResultsUI() {
+  const list = document.getElementById("place-results-list");
+  list.innerHTML = "";
+  const maxV = Math.max(...Object.values(placeCounts), 1);
+  const sorted = [...PLACES].sort((a, b) => (placeCounts[b]||0) - (placeCounts[a]||0));
+  sorted.forEach(p => {
+    const v = placeCounts[p] || 0;
+    const pct = (v / maxV) * 100;
+    const row = document.createElement("div");
+    row.className = "result-row";
+    row.innerHTML = `
+      <div class="result-date" style="min-width:130px">${p}</div>
+      <div class="result-bar-wrap"><div class="result-bar" style="width:${pct}%"></div></div>
+      <div class="result-count">${v} 票</div>
+    `;
+    list.appendChild(row);
+  });
+}
+updatePlaceResultsUI();
+
+
+// ─── Background Toolbar ───────────────────────────────────────────────────────
+function toggleToolbar() {
+  document.getElementById("bg-toolbar-panel").classList.toggle("open");
+}
+
+function applyBgFilter() {
+  const brightness = document.getElementById("sl-brightness").value;
+  const blur = document.getElementById("sl-blur").value;
+  const saturate = document.getElementById("sl-saturate").value;
+  document.getElementById("val-brightness").textContent = brightness + "%";
+  document.getElementById("val-blur").textContent = blur + "px";
+  document.getElementById("val-saturate").textContent = saturate + "%";
+  document.querySelectorAll(".bg-slide").forEach(s => {
+    s.style.filter = `blur(${blur}px) brightness(${brightness/100}) saturate(${saturate/100})`;
+  });
+}
+
+["sl-brightness","sl-blur","sl-saturate"].forEach(id => {
+  document.getElementById(id).addEventListener("input", applyBgFilter);
+});
+
 </script>
 </body>
 </html>
