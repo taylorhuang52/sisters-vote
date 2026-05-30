@@ -762,6 +762,40 @@
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(212,175,55,0.3);
   }
+
+  /* ── Music Player ───────────────────────────────────────────── */
+  #music-btn {
+    position: fixed;
+    bottom: 36px;
+    left: 20px;
+    z-index: 50;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.45);
+    background: rgba(26,10,20,0.82);
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
+  }
+  #music-btn.playing {
+    animation: music-pulse 2s ease-in-out infinite alternate;
+  }
+  @keyframes music-pulse {
+    from { box-shadow: 0 4px 16px rgba(212,175,55,0.2); }
+    to   { box-shadow: 0 4px 24px rgba(212,175,55,0.55), 0 0 0 4px rgba(212,175,55,0.08); }
+  }
+  #yt-frame { display: none; }
 </style>
 </head>
 <body>
@@ -769,6 +803,14 @@
 <div id="bg-carousel"></div>
 <div id="overlay"></div>
 <div id="sparkles"></div>
+
+<!-- YouTube hidden player -->
+<div id="yt-frame">
+  <audio id="bg-audio" src="閃亮三姊妹.mp3" loop preload="auto"></audio>
+</div>
+<!-- Music toggle button -->
+<button id="music-btn" title="音樂開關">🎵</button>
+
 <div id="toast"></div>
 
 <div id="app">
@@ -1261,5 +1303,25 @@ function applyBgFilter() {
 });
 
 </script>
+
+<script>
+const bgAudio = document.getElementById('bg-audio');
+bgAudio.volume = 0.6;
+
+document.getElementById('music-btn').addEventListener('click', function() {
+  if (bgAudio.paused) {
+    bgAudio.play();
+    this.textContent = '🔊';
+    this.classList.add('playing');
+    this.title = '靜音';
+  } else {
+    bgAudio.pause();
+    this.textContent = '🎵';
+    this.classList.remove('playing');
+    this.title = '開啟音樂';
+  }
+});
+</script>
+
 </body>
 </html>
