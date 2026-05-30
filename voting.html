@@ -965,6 +965,25 @@
         </div>
       </div>
     </div>
+
+    <!-- 7. 良味小廚 -->
+    <div class="place-card" id="pc_7">
+      <img class="place-img" src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=700&q=70"
+           onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=70'" alt="良味小廚">
+      <div class="place-body">
+        <div class="place-checkbox-wrap">
+          <input type="checkbox" class="place-checkbox" id="pl_7" value="良味小廚" onchange="togglePlaceCard(this)">
+        </div>
+        <div class="place-info">
+          <label for="pl_7" class="place-name" style="cursor:pointer">
+            🍜 良味小廚
+            <span class="place-tag">川菜・台菜・熱炒</span>
+          </label>
+          <p class="place-desc">林口龜山必吃美食，融合川菜與台菜的熱炒餐廳，料理口味道地、份量扎實。川味下飯菜色豐富，熱炒家常菜樣樣美味，是聚餐打牙祭的好選擇。</p>
+          <a class="place-link" href="https://www.facebook.com/p/%E8%89%AF%E5%91%B3%E5%B0%8F%E5%BB%9A%E6%9E%97%E5%8F%A3%E9%BE%9C%E5%B1%B1%E5%BF%85%E5%90%83%E7%BE%8E%E9%A3%9F%E5%B7%9D%E8%8F%9C%E5%8F%B0%E8%8F%9C%E7%86%B1%E7%82%92-100076394317344/" target="_blank">📘 良味小廚 Facebook ↗</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 統一送出按鈕 -->
@@ -1249,7 +1268,8 @@ async function submitVote() {
 // ─── Places data ─────────────────────────────────────────────────────────────
 const PLACES = [
   "菓風糖果工房", "伯朗咖啡館", "布佬廚房 Bruce's Kitchen",
-  "宜農牧場", "員山金車酒廠", "蒔花咖啡 DailyBlossom Cafe & More"
+  "宜農牧場", "員山金車酒廠", "蒔花咖啡 DailyBlossom Cafe & More",
+  "良味小廚"
 ];
 let placeCounts = {};
 PLACES.forEach(p => placeCounts[p] = 0);
